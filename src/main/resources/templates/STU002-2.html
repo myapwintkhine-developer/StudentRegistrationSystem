@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"  xmlns:form="http://www.springframework.org/tags/form">
+
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/test.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    
+        <title>Course Registration</title>
+        
+        <style>
+        .error-message{color:red;}
+        </style>
+</head>
+
+<body>
+    <div id="testheader">
+        <div class="container">
+            <div class=row>        
+                <div class="col-md-5 ">
+             
+            <th:block th:if="${session.loginUser.role == 'USER'}"> <a href="/user-register-student"><h3>Student Registration</h3></a></th:block>
+        </div>  
+        <div class="col-md-6">
+             <p><span th:text="${session.loginUser.role }"></span>: ID <span th:text="${session.loginUser.id}"></span> <span th:text="${session.loginUser.username}"></span></p>
+            <p>Current Date : <span th:text="${#dates.format(#dates.createNow(), 'MM-dd-yyyy')}"></span> </p>
+        </div>  
+        <div class="col-md-1" >
+            <input type="button" class="btn-basic" id="lgnout-button" value="Log Out" onclick="location.href='/logout'">
+        </div>        
+    </div>
+    </div>
+    
+    </div>
+    <div class="container">
+    <div class="sidenav">
+        
+        <button class="dropdown-btn" > Class Management <i class="fa fa-caret-down"></i></button>
+        
+            <div class="dropdown-container">
+          <a href="/create-course">Course Registration </a>
+          <th:block th:if="${session.loginUser.role  == 'USER'}"> <a href="/StudentManagementSpring/user-register-student">Student Registration</a></th:block>
+          <a href="/view-all-students">Student Search </a>
+             <th:block th:if="${session.loginUser.role  == 'USER'}"><a href="/view-request-history">My History</a></th:block>
+          <th:block th:if="${session.loginUser.role  == 'ADMIN'}"><a href="/admin-view-requests">Student Requests</a></th:block>
+        </div>
+        
+        <th:block th:if="${session.loginUser.role  == 'ADMIN'}"><a href="/view-all-users">Users Management</a></th:block>
+      </div>
+      <div class="main_contents">
+      <div>
+      <p th:text="${StudentDeleteReqSuccess}" style="color:green;text-align:center"></p>
+      <p th:text="${StudentDeleteReqError}" style="color:red;text-align:center"></p>
+      </div>
+    <div id="sub_content">
+        <form action="/user-delete-student" method="post" th:object="${studentdto}" enctype="multipart/form-data">
+
+            <h2 class="col-md-6 offset-md-2 mb-5 mt-4">Student Details</h2>
+            <img th:src="@{'/image/' + ${studentdto.photo}}" width="200" height="200" style="margin-left:400px;padding:20px"/>
+            <div class="row mb-4">
+                <div class="col-md-2"></div>
+                <label for="student_id" class="col-md-2 col-form-label">Student ID</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control"  id="id" name="id" th:field="${studentdto.id}" readonly="true"/>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-2"></div>
+                <label for="student_name" class="col-md-2 col-form-label">Student Name</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="student_name" name="student_name" th:field="${studentdto.student_name}" readonly/>
+                </div>
+                <div id="studentNameError" class="error-message"></div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-2"></div>
+                <label for="dob" class="col-md-2 col-form-label">DOB</label>
+                <div class="col-md-4">
+                    <input type="date" class="form-control" id="dob" name="dob" th:field="${studentdto.dob}" readonly/>
+            
+                </div>
+                <div id="dobError" class="error-message"></div>
+            </div>
+           <fieldset class="row mb-4">
+                <div class="col-md-2"></div>
+                
+                <legend class="col-form-label col-md-2 pt-0">Gender</legend>
+                <div class="col-md-4">
+                    
+                   <div class="form-check-inline">
+                        
+                            <input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="Male"
+                   th:checked="${studentdto.gender == 'Male'}" th:field="${studentdto.gender}" />
+                             <label class="form-check-label" for="gridRadios1">
+                            Male
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="gridRadios2"  value="Female" 
+                        th:checked="${studentdto.gender == 'Female'}" th:field="${studentdto.gender}" />
+                        <label class="form-check-label" for="gridRadios2">
+                            Female
+                        </label>
+                    </div>
+    
+                </div>
+                <div id="genderError" class="error-message"></div>
+            </fieldset>
+            <div class="row mb-4">
+                <div class="col-md-2"></div>
+                <label for="phone" class="col-md-2 col-form-label">Phone</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="phone" name="phone" th:field="${studentdto.phone}" readonly/>
+                </div>
+                <div id="phoneError" class="error-message"></div>
+            </div>
+            
+            <div class="row mb-4">
+                <div class="col-md-2"></div>
+                <label for="registerDate" class="col-md-2 col-form-label">Register Date</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="registerDate" name="registerDate" th:field="${studentdto.registerDate}" readonly/>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-2"></div>
+                <label for="education" class="col-md-2 col-form-label">Education</label>
+               
+                <div class="col-md-4">
+                    <select class="form-select" aria-label="Education" id="education" name="education" th:field="${studentdto.education}">
+        <option value="Bachelor of Information Technology" th:selected="${studentdto.education == 'Bachelor of Information Technology'}">Bachelor of Information Technology</option>
+        <option value="Diploma in IT" th:selected="${studentdto.education == 'Diploma in IT'}">Diploma in IT</option>
+        <option value="Bachelor of Computer Science" th:selected="${studentdto.education == 'Bachelor of Computer Science'}">Bachelor of Computer Science</option>
+
+    
+                    </select>
+                </div>
+                <div id="educationError" class="error-message"></div>
+            </div>
+           
+            
+            <fieldset class="row mb-4">
+    <div class="col-md-2"></div>
+    <legend class="col-form-label col-md-2 pt-0">Attend</legend>
+    <div class="col-md-4">
+         
+        
+        <th:block th:each="course : ${course_list}">
+            <div class="form-check-inline col-md-2">
+                <input class="form-check-input" type="checkbox" name="course" id="gridRadios1"  th:value="${course.coursename}"   th:checked="${cnames.contains(course.coursename)}"/>
+                <label class="form-check-label" for="gridRadios1" th:text="${course.coursename}">
+                    
+                </label>
+            </div>
+            </th:block>
+            <div id="courseError" class="error-message"></div>
+            <p class="error-message" th:text="${courseEmptyError}"></p>
+           </div>
+</fieldset>
+            
+  
+             <input type="text" class="form-control" id="photo" name="photo" th:field="${studentdto.photo}" hidden="hidden" />
+            <div class="row mb-4">
+                <div class="col-md-2"></div>
+                <label for="username" class="col-md-2 col-form-label">Username</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="username" name="username" th:field="${studentdto.username}" readonly="true"/>
+                </div>
+            </div>
+             <div class="row mb-4">
+                <div class="col-md-2"></div>
+                <label for="user_message" class="col-md-2 col-form-label">Reason</label>
+                <div class="col-md-4">
+                    <textarea rows="5" class="form-control" id="user_message" name="user_message"  placeholder="Type your reason..."></textarea>
+                </div>
+                <div id="userMsgError" class="error-message"></div>
+            </div>
+            <input type="number" class="form-control" id="user_id" name="user_id" th:field="${studentdto.user_id}" hidden="hidden"/>
+            <div class="row mb-4">
+                    <div style="text-align:center">
+                  <a href="/view-all-students"><button type="button" class="btn btn-primary" style="width:100px">Back</button></a>
+                  <button type="submit" class="btn btn-primary" style="width:100px">Delete</button>
+                  </div>
+    
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Student Deletion</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
+                                    <button type="button" class="btn btn-danger">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </form>
+            </div>
+    
+    
+    
+    
+    
+         
+    </div>
+</div>
+
+        <div id="testfooter">
+            <span>Copyright &#169; ACE Inspiration 2022</span>
+        </div>
+        <script>
+            /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+            var dropdown = document.getElementsByClassName("dropdown-btn");
+            var i;
+            
+            for (i = 0; i < dropdown.length; i++) {
+              dropdown[i].addEventListener("click", function() {
+              this.classList.toggle("active");
+              var dropdownContent = this.nextElementSibling;
+              if (dropdownContent.style.display === "block") {
+              dropdownContent.style.display = "none";
+              } else {
+              dropdownContent.style.display = "block";
+              }
+              });
+            }
+            
+            function goBack(){
+                window.history.back();
+            }
+            
+            var myForm = document.getElementById("myForm");
+            myForm.addEventListener("submit", function(event) {
+            	
+
+            	  var studentNameInput = document.getElementById("student_name").value;
+            	  var dobInput = document.getElementById("dob").value;
+            	  var phoneInput=document.getElementById("password").value;
+            	  var userMsgInput=document.getElementById("user_message")
+				
+            	  
+            	  var studentNameError = document.getElementById("studentNameError");
+            	  if (studentNameInput.trim() === "") {
+            		  studentNameError.textContent = "Please enter student name.";
+            		  event.preventDefault();
+            	    return;
+            	  } else {
+            		  studentNameError.textContent = "";
+            	  }
+
+            	  var dobError = document.getElementById("dobError");
+            	  if (dobInput.trim() === "") {
+            	    dobError.textContent = "Please enter dob.";
+            	    event.preventDefault();
+            	    return;
+            	  } else {
+            	    dobError.textContent = "";
+            	  }
+
+            	  var phoneError = document.getElementById("phoneError");
+            	  if (phoneInput.trim() === "") {
+            		  phoneError.textContent = "Please enter phone no.";
+            		  event.preventDefault();
+            	    return;
+            	  } else {
+            		  phoneError.textContent = "";
+            	  }
+            	  
+            	  //for radio buttons
+            	  var radioButtons = document.getElementsByName("gender");
+            	  var checked = false;
+
+            	  // Check if any radio button is selected
+            	  for (var i = 0; i < radioButtons.length; i++) {
+            	    if (radioButtons[i].checked) {
+            	      checked = true;
+            	      break;
+            	    }
+            	  }
+
+            	
+            	  if (!checked) {
+            	    genderError.textContent="Please select gender.";
+            	    event.preventDefault();
+            	    return;
+            	  }else{
+            		  genderError.textContent = "";
+            	  }
+
+            	  //for checkboxes
+            	  var checkboxes = document.getElementsByName("course");
+            	  var checked = false;
+
+            	  // Check if at least one checkbox is checked
+            	  for (var i = 0; i < checkboxes.length; i++) {
+            	    if (checkboxes[i].checked) {
+            	      checked = true;
+            	      break;
+            	    }
+            	  }
+
+            	  // Display error message if no checkbox is checked
+            	  if (!checked) {
+            		  courseError.textContent="Please select at least one course.";
+            	    return;
+            	  }
+            	  else{
+            		  courseError.textContent = "";
+            	  }
+
+            	 
+
+					
+            	  var userMsgError = document.getElementById("userMsgError");
+            	  if (userMsgInput.trim() === "") {
+            		  userMsgError.textContent = "Please enter your reason.";
+            		  event.preventDefault();
+            	    return;
+            	  } else {
+            		  userMsgError.textContent = "";
+            	  }
+            	  
+            	 
+            	});
+            </script>
+</body>
+
+</html>
+

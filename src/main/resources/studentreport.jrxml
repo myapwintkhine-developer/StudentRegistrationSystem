@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sreport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6ca59228-df85-4ec3-aae6-7295fb637740">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="student"/>
+	<queryString language="SQL">
+		<![CDATA[select * from studentsb.student_view]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="student"/>
+	</field>
+	<field name="student_name" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="student_name"/>
+		<property name="com.jaspersoft.studio.field.label" value="student_name"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="student"/>
+	</field>
+	<field name="dob" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="dob"/>
+		<property name="com.jaspersoft.studio.field.label" value="dob"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="student"/>
+	</field>
+	<field name="gender" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="gender"/>
+		<property name="com.jaspersoft.studio.field.label" value="gender"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="student"/>
+	</field>
+	<field name="phone" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="phone"/>
+		<property name="com.jaspersoft.studio.field.label" value="phone"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="student"/>
+	</field>
+	<field name="education" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="education"/>
+		<property name="com.jaspersoft.studio.field.label" value="education"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="student"/>
+	</field>
+	<field name="coursenames" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="coursenames"/>
+		<property name="com.jaspersoft.studio.field.label" value="coursenames"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="student_view"/>
+	</field>
+	<group name="id">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+	</group>
+	<group name="student_name">
+		<groupExpression><![CDATA[$F{student_name}]]></groupExpression>
+	</group>
+	<group name="dob">
+		<groupExpression><![CDATA[$F{dob}]]></groupExpression>
+	</group>
+	<group name="gender">
+		<groupExpression><![CDATA[$F{gender}]]></groupExpression>
+	</group>
+	<group name="phone">
+		<groupExpression><![CDATA[$F{phone}]]></groupExpression>
+	</group>
+	<group name="education">
+		<groupExpression><![CDATA[$F{education}]]></groupExpression>
+	</group>
+	<group name="coursenames">
+		<groupExpression><![CDATA[$F{coursenames}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="230" y="24" width="90" height="30" uuid="aa893df9-36f5-4fb7-81c0-5eed34c50a0e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Student List]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="18" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="30" height="21" uuid="ae427aaf-321f-4e19-8758-083cc4885798"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="10" width="80" height="21" uuid="fc151b4a-65af-4080-aba7-cfe4a657ecc5"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Student Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="10" width="60" height="21" uuid="cae845bb-3271-4846-8f1f-cd53fd2fa1d1"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DOB]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="10" width="50" height="21" uuid="1c66e03f-d50a-4379-bec9-16d21cdef6da"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Gender]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="10" width="60" height="21" uuid="63bd45f8-e1f2-4079-be77-7b9218084ebe"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Phone]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="10" width="100" height="21" uuid="a6979807-4b57-444e-8a81-2d3b1ce6aa7a"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Education]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="10" width="185" height="21" uuid="1a3f16cc-70a8-41c3-8b98-800d8f51948b"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Course]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="58" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="30" height="21" uuid="d057f93e-2807-4b6e-a284-85fb6904e30c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="10" width="60" height="21" uuid="117c2136-9308-431e-ace2-e2dea16f8f51"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{dob}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="10" width="80" height="21" uuid="8d3eda02-9638-46a5-85ba-ff84e10f7e25"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{student_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="10" width="50" height="21" uuid="34767e7c-7bfe-4087-a12c-738ac8046ec1"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{gender}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="10" width="60" height="21" uuid="25f3a19b-e14c-4d13-bc65-b0930fd6af53"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{phone}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="10" width="100" height="21" uuid="fe4dcedc-6fdd-4406-b066-6f72b4936e84"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{education}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="10" width="185" height="21" uuid="e5054ae5-eb7c-407b-8729-7e9785e5464a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{coursenames}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

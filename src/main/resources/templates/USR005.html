@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"  xmlns:form="http://www.springframework.org/tags/form">
+
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/test.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    
+        <title>Admin Confirmation</title>
+</head>
+
+<body>
+  <div id="testheader">
+    <div class="container">
+        <div class=row>        
+            <div class="col-md-5 ">
+            <th:block th:if="${session.loginUser.role == 'USER'}"> <a href="/user-register-student"><h3>Student Registration</h3></a></th:block>
+    </div>  
+    <div class="col-md-6">
+     <p><span th:text="${session.loginUser.role}"></span>: ID <span th:text="${session.loginUser.id}"></span> <span th:text="${session.loginUser.username}"></span></p>
+            <p>Current Date : <span th:text="${#dates.format(#dates.createNow(), 'MM-dd-yyyy')}"></span> </p>
+        </div>  
+    <div class="col-md-1" >
+        <input type="button" class="btn-basic" id="lgnout-button" value="Log Out" onclick="location.href='/logout'">
+    </div>        
+</div>
+</div>
+
+</div>
+    
+    <div class="container">
+    <div class="sidenav">
+        
+        <button class="dropdown-btn" > Class Management <i class="fa fa-caret-down"></i></button>
+        
+            <div class="dropdown-container">
+          <a href="/create-course">Course Registration </a>
+          <th:block th:if="${session.loginUser.role == 'USER'}"> <a href="/user-register-student">Student Registration</a></th:block>
+          <a href="/view-all-students">Student Search </a>
+             <th:block th:if="${session.loginUser.role == 'USER'}"><a href="/view-request-history">My History</a></th:block>
+          <th:block th:if="${session.loginUser.role == 'ADMIN'}"><a href="/admin-view-requests">Student Requests</a></th:block>
+        </div>
+        
+        <th:block th:if="${session.loginUser.role == 'ADMIN'}"><a href="/view-all-users">Users Management</a></th:block>
+      </div>
+      <div class="main_contents">
+      
+    <div id="sub_content">
+     <form class="row g-3 mt-3 ms-2" action="/request-history-search" method="post">
+        <div class="col-auto">
+          <label for="staticEmail2" class="visually-hidden">studentID</label>
+          <input style="width:150px" type="text"  class="form-control" id="staticEmail2" name="studentid" placeholder="Student ID">
+        </div>
+        <div class="col-auto">
+          <label for="inputPassword2" class="visually-hidden">studentName</label>
+          <input style="width:150px" type="text" class="form-control" id="inputPassword2" name="studentname" placeholder="Student Name">
+        </div>
+        <div class="col-auto">
+            <label for="inputPassword2" class="visually-hidden">Course</label>
+            <input style="width:150px" type="text" class="form-control" id="inputPassword2" name="coursename" placeholder="Course">
+          </div>
+        <div class="col-auto">
+          <label for="inputPassword2" class="visually-hidden">Action</label>
+          <input style="width:150px" type="text" class="form-control" id="inputPassword2" name="action" placeholder="Action">
+        </div>
+         <div class="col-auto">
+          <label for="inputPassword2" class="visually-hidden">Status</label>
+          <input style="width:150px" type="text" class="form-control" id="inputPassword2" name="status" placeholder="Status">
+        </div>
+        
+        <div class="col-auto">
+          <button type="submit" class="btn btn-success mb-3">Search</button>
+        </div>
+        <div class="col-auto">
+          <button type="reset" class="btn btn-secondary mb-3">Reset</button>
+        </div>
+      </form>
+      <p th:text="${adminApproveSuccess}" style="margin-left:450px;font-size:20px;color:green;padding:8px"></p>
+      <p th:text="${adminRejectSuccess}" style="margin-left:450px;font-size:20px;color:green;padding:8px"></p>
+<div>
+      <table class="table table-striped" id="stduentTable">
+        <thead>
+          <tr>
+          
+            <th scope="col">Student ID</th>
+            <th scope="col">Student Name</th>
+            <th scope="col">Photo</th>
+            <th scope="col">Course Name</th>
+           
+            <th scope="col">Action</th>
+            <th scope="col">Status</th>
+             <th scope="col">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+       
+        
+       <th:block th:each="stureq : ${stureq_list}">
+            <tr>
+            <td th:text="${stureq.studentid}"></td>
+            <td th:text="${stureq.studentname}"></td>
+            <td><img th:src="@{'image/' + ${stureq.photo}}" width="100" height="100"/></td>
+           
+            <td> <p th:each="eachstucoureq, iterStat : ${stureq.studentcourserequest}" th:text="${eachstucoureq.course.coursename}">
+    			</p>
+    			</td>
+            
+             <td th:text="${stureq.action}"></td>
+             <td th:text="${stureq.status}"></td>
+            <td>
+               <a th:href="@{/show-one-student-request/{id}(id=${stureq.id})}"><button type="submit" class="btn btn-secondary mb-2">See More</button></a> 
+            </td>
+           
+            
+          </tr>
+             
+         </th:block>
+        </tbody>
+      </table>
+    </div>
+    </div>
+</div>
+</div>
+        <div id="testfooter">
+            <span>Copyright &#169; ACE Inspiration 2022</span>
+        </div>
+        <script>
+            /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+            var dropdown = document.getElementsByClassName("dropdown-btn");
+            var i;
+            
+            for (i = 0; i < dropdown.length; i++) {
+              dropdown[i].addEventListener("click", function() {
+              this.classList.toggle("active");
+              var dropdownContent = this.nextElementSibling;
+              if (dropdownContent.style.display === "block") {
+              dropdownContent.style.display = "none";
+              } else {
+              dropdownContent.style.display = "block";
+              }
+              });
+            }
+            </script>
+</body>
+
+</html>
+
+
+

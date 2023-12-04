@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"  xmlns:form="http://www.springframework.org/tags/form">
+<head>
+<link rel="stylesheet" href="css/test.css">
+<title> Reset Password</title>
+</head>
+<body class="login-page-body"> 
+  
+    <div class="login-page">
+    
+      <div class="form">
+        <div class="login">
+          <div class="login-header">
+            <h1>Reset Password!</h1>
+          <p th:text="${resetInactiveError}"></p>
+           <p th:text="${resetCheckMail}"></p>
+           <p th:text="${emailError}"></p>
+          
+          </div>
+        </div>
+        <form class="login-form" th:action="@{/forgot-password}" method="post" name="confirm">
+        <input type="text" id="username" name="username" placeholder="Username" />
+          <input type="text" id="email" name="email" placeholder="Email" />
+          <button>Send Email</button>
+          
+        </form>
+      </div>
+    </div>
+</body>
+
+</html>

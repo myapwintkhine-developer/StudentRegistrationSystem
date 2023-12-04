@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"  xmlns:form="http://www.springframework.org/tags/form">
+<head>
+<link rel="stylesheet" href="../css/test.css">
+<title> Reset Password</title>
+</head>
+<body class="login-page-body"> 
+  
+    <div class="login-page">
+    
+      <div class="form">
+        <div class="login">
+          <div class="login-header">
+           <h1>Reset Password!</h1>
+          <p th:text="${resetInactiveError}"></p>
+           <p th:text="${resetCheckMail}"></p>
+           <p th:text="${emailError}"></p>
+          
+          </div>
+        </div>
+        <form class="login-form" th:action="@{/reset-password}" th:object="${userToReset}" method="post" name="confirm">
+       		<input type="number" id="id" name="id" th:field="${userToReset.id}" hidden="hidden" />
+          <input type="password" id="password" name="password" placeholder="Enter new password" />
+          <input type="password" id="cpassword" name="cpassword" placeholder="Confirm new password" />
+           <div id="password-error" style="color: #ff0000;font-size: 14px;margin-left:450px"></div>
+          <button>Reset Password</button>
+          
+        </form>
+      </div>
+    </div>
+    
+    
+    <script>
+    const form=document.querySelector('form');
+    const passwordInput=document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('cpassword');
+    const passwordError=document.getElementById('password-error');
+
+    form.addEventListener('submit',(event) =>{
+        if(passwordInput.value !== confirmPasswordInput.value){
+            event.preventDefault();
+            passwordError.textContent='Password and confirm password do not match! Please Try again.';
+            passwordError.style.background="#ffb9ab";
+            passwordError.style.border="1px solid #dde1e7";
+            passwordError.style.borderRadius="10px";
+            passwordError.style.padding="7px";
+            passwordError.style.width="460px";
+            passwordError.style.marginTop="5px";
+    }else
+    {
+        passwordError.textContent = '';
+    }
+    });
+    
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"  xmlns:form="http://www.springframework.org/tags/form">
+
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/test.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    
+        <title>Admin Registration</title>
+</head>
+
+<body>
+    <div id="testheader">
+        
+
+</div>
+    
+    <div class="container">
+    
+      <div class="main_contents">
+      <p th:text="${userRegisterSuccess}" style="text-align:center;color:green"></p>
+      <p th:text="${userRegisterError}" style="text-align:center;color:red"></p>
+      <p th:text="${codeError}" style="text-align:center;color:red"></p>
+      <p th:text="${wrongCodeError}" style="text-align:center;color:red"></p>
+      
+    <div id="sub_content">
+         <form th:action="@{/register-admin}" method="post" th:object="${userdto}" id="myForm">
+
+            <h2 class="col-md-6 offset-md-2 mb-5 mt-4">Admin Registration</h2>
+        
+            
+            <div class="row mb-4">
+                <div class="col-md-2"></div>
+                <label for="username" class="col-md-2 col-form-label">Name</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="username" name="username" th:field="${userdto.username}" placeholder="Enter username" />
+                </div>
+                 <div id="nameError" class="error-message"></div>
+            </div>
+            
+            <div class="row mb-4">
+                <div class="col-md-2"></div>
+                <label for="email" class="col-md-2 col-form-label">Email</label>
+                <div class="col-md-4">
+                     <input type="email" class="form-control" id="email" name="email" th:field="${userdto.email}" placeholder="Enter email" />
+                </div>
+                <div id="emailError" class="error-message"></div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-2"></div>
+                <label for="code" class="col-md-2 col-form-label">Code</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="code" name="code" placeholder="Enter code"/>
+                </div>
+                <div style="color:red" th:text="${codeEmptyError}"></div>
+                <div id="codeError" class="error-message"></div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-2"></div>
+                <label for="password" class="col-md-2 col-form-label">Password</label>
+                <div class="col-md-4">
+                   <input type="password" class="form-control" id="password" name="password" th:field="${userdto.password}" placeholder="Enter password"/>
+                </div>
+                <div id="passwordError" class="error-message"></div>
+            </div>
+            
+            <div class="row mb-4">
+                <div class="col-md-2"></div>
+                <label for="cpassword" class="col-md-2 col-form-label">Confirm Passowrd</label>
+                <div class="col-md-4">
+                    <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Enter confirm password">
+                </div>
+                <div id="password-error" style="color: #ff0000;font-size: 14px;margin-left:450px"></div>
+            </div>
+            
+            <div class="row mb-4">
+                <div class="col-md-4"></div>
+    
+                <div class="col-md-6">
+                   
+    
+                    <button type="submit" class="btn btn-secondary col-md-2" >Add</button>
+                    
+    
+            </div>
+            </form>
+    </div>
+</div>
+</div>
+        <div id="testfooter">
+            <span>Copyright &#169; ACE Inspiration 2022</span>
+        </div>
+        <script>
+            /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+            var dropdown = document.getElementsByClassName("dropdown-btn");
+            var i;
+            
+            for (i = 0; i < dropdown.length; i++) {
+              dropdown[i].addEventListener("click", function() {
+              this.classList.toggle("active");
+              var dropdownContent = this.nextElementSibling;
+              if (dropdownContent.style.display === "block") {
+              dropdownContent.style.display = "none";
+              } else {
+              dropdownContent.style.display = "block";
+              }
+              });
+            }
+            </script>
+            <script>
+            const form=document.querySelector('form');
+            const passwordInput=document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('cpassword');
+            const passwordError=document.getElementById('password-error');
+
+            form.addEventListener('submit',(event) =>{
+                if(passwordInput.value !== confirmPasswordInput.value){
+                    event.preventDefault();
+                    passwordError.textContent='Password and confirm password do not match! Please Try again.';
+                    passwordError.style.background="#ffb9ab";
+                    passwordError.style.border="1px solid #dde1e7";
+                    passwordError.style.borderRadius="10px";
+                    passwordError.style.padding="7px";
+                    passwordError.style.width="460px";
+                    passwordError.style.marginTop="5px";
+            }else
+            {
+                passwordError.textContent = '';
+            }
+            });
+            
+            var myForm = document.getElementById("myForm");
+            myForm.addEventListener("submit", function(event) {
+            	 
+
+            	  var nameInput = document.getElementById("username").value;
+            	  var emailInput = document.getElementById("email").value;
+            	  var codeInput = document.getElementById("code").value;
+            	  var passwordInput=document.getElementById("password").value;
+				
+            	  
+            	  var nameError = document.getElementById("nameError");
+            	  if (nameInput.trim() === "") {
+            	    nameError.textContent = "Please enter your name.";
+            	    event.preventDefault();
+            	    return;
+            	  } else {
+            	    nameError.textContent = "";
+            	  }
+
+            	  var emailError = document.getElementById("emailError");
+            	  if (emailInput.trim() === "") {
+            	    emailError.textContent = "Please enter your email.";
+            	    event.preventDefault();
+            	    return;
+            	  } else {
+            	    emailError.textContent = "";
+            	  }
+            	  
+            	  var codeError = document.getElementById("codeError");
+            	  if (codeInput.trim() === "") {
+            	    codeError.textContent = "Please enter code.";
+            	    event.preventDefault();
+            	    return;
+            	  } else {
+            	    emailError.textContent = "";
+            	  }
+
+            	  var passwordError = document.getElementById("passwordError");
+            	  if (passwordInput.trim() === "") {
+            	    passwordError.textContent = "Please enter your password.";
+            	    event.preventDefault();
+            	    return;
+            	  } else {
+            	    emailError.textContent = "";
+            	  }
+            	  
+            	  
+            	});
+        </script>
+</body>
+
+</html>
+
+    
